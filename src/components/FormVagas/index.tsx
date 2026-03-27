@@ -1,31 +1,32 @@
-import { FormEvent, useState } from 'react'
-
-import styles from './FormVagas.module.css'
+import { ChangeEventHandler, FormEvent, useState } from 'react'
+import { ForVagas, InputVaga } from './styles'
+import { ButtonSub } from './styles'
 
 type Props = {
-  aoPesquisar: (termo: string) => void
+	aoPesquisar: (termo: string) => void
 }
 
 const FormVagas = ({ aoPesquisar }: Props) => {
-  const [termo, setTermo] = useState<string>('')
+	const [termo, setTermo] = useState<string>('')
 
-  const aoEnviarForm = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    aoPesquisar(termo.toLocaleLowerCase())
-  }
+	const HandlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setTermo(event.target.value)
+	}
 
-  return (
-    <form className={styles.form} onSubmit={aoEnviarForm}>
-      <input
-        className={styles.campo}
-        placeholder="Front-end, fullstack, node, design"
-        onChange={(e) => setTermo(e.target.value)}
-        type="search"
-      />
-      <button className={styles.btnPesquisar} type="submit">
-        Pesquisar
-      </button>
-    </form>
-  )
+	const aoEnviarForm = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		aoPesquisar(termo.toLocaleLowerCase())
+	}
+
+	return (
+		<ForVagas onSubmit={aoEnviarForm}>
+			<InputVaga
+				placeholder="Front-end, Fullstack, node, desingn"
+				onChange={HandlerChange}
+				type="search"
+			/>
+			<ButtonSub>Pesquisar</ButtonSub>
+		</ForVagas>
+	)
 }
 export default FormVagas
